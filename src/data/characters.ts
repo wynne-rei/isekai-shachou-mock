@@ -1,5 +1,10 @@
 // かんぱに新作モック v1.5 - キャラクターデータ
 // 実キャラ画像は権利確認後に差し替え。現在は仮色＋名前プレースホルダー。
+//
+// ⚠️ 仮埋めメモ（2026-04-17）
+// ローズ／ジークリット／プレースホルダー3体の image・chibi は、
+// 本物の素材ができるまでモニクの素材で仮埋めしている。
+// 専用素材ができたら TODO コメントを外して差し替える。
 
 export type Job = "sword" | "axe" | "bow" | "magic" | "priest";
 export type Department =
@@ -54,6 +59,9 @@ export const CHARACTERS: Character[] = [
   {
     id: "rose",
     name: "ローズ",
+    // TODO: 仮埋め（モニクの素材を流用）— 専用素材ができたら差し替え
+    image: "characters/monique_v2.png",
+    chibi: "characters/monique_chibi.png",
     job: "sword",
     title: "剣聖ローズ",
     color: "#e84a6f", // rose red
@@ -73,7 +81,9 @@ export const CHARACTERS: Character[] = [
     job: "axe",
     title: "竜公",
     color: "#9a85d6", // purple（実画像の髪色基調）
-    image: "characters/siegrit.png",
+    // TODO: 仮埋め（モニクの素材を流用）— 専用素材ができたら siegrit.png に戻す or 新素材へ
+    image: "characters/monique_v2.png",
+    chibi: "characters/monique_chibi.png",
     department: "dormitory",
     greeting: {
       morning: "社長、おはよう。本日の任務を確認した",
@@ -86,7 +96,11 @@ export const CHARACTERS: Character[] = [
   },
 ];
 
-// モック用：プレースホルダー2人（戦闘画面で6人編成を成立させるため）
+// モック用：プレースホルダー3人（戦闘画面で6人編成を成立させるため）
+// TODO: 仮埋め（全員モニクの素材を流用）— 専用素材ができたら差し替え
+const PLACEHOLDER_IMAGE = "characters/monique_v2.png";
+const PLACEHOLDER_CHIBI = "characters/monique_chibi.png";
+
 export const PLACEHOLDER_CHARACTERS: Character[] = [
   {
     id: "placeholder_bow",
@@ -94,6 +108,8 @@ export const PLACEHOLDER_CHARACTERS: Character[] = [
     job: "bow",
     title: "遠距離支援",
     color: "#6ab97a",
+    image: PLACEHOLDER_IMAGE,
+    chibi: PLACEHOLDER_CHIBI,
     department: "pr",
     greeting: { morning: "", noon: "", evening: "", night: "" },
     aiPersonality: "support",
@@ -105,6 +121,8 @@ export const PLACEHOLDER_CHARACTERS: Character[] = [
     job: "magic",
     title: "範囲攻撃",
     color: "#5a8cd6",
+    image: PLACEHOLDER_IMAGE,
+    chibi: PLACEHOLDER_CHIBI,
     department: "accounting",
     greeting: { morning: "", noon: "", evening: "", night: "" },
     aiPersonality: "support",
@@ -116,6 +134,8 @@ export const PLACEHOLDER_CHARACTERS: Character[] = [
     job: "priest",
     title: "回復支援",
     color: "#e8d47a",
+    image: PLACEHOLDER_IMAGE,
+    chibi: PLACEHOLDER_CHIBI,
     department: "infirmary",
     greeting: { morning: "", noon: "", evening: "", night: "" },
     aiPersonality: "support",
