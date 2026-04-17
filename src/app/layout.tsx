@@ -14,8 +14,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "かんぱに新作モック v1.5",
-  description: "かんぱに☆ガールズ新作の企画書替わりモック",
+  title: "異世界社長（仮）モック",
+  description: "異世界傭兵会社の経営シミュレーション 企画書替わりプロトタイプ",
 };
 
 export default function RootLayout({
@@ -32,7 +32,7 @@ export default function RootLayout({
         <GlobalNav />
         <main className="flex-1 flex flex-col">{children}</main>
         <footer className="text-center text-[10px] text-stone-500 py-2 border-t border-stone-800">
-          かんぱに新作モック v1.5 ／ 合意形成用プロトタイプ ／ プレースホルダー素材
+          異世界社長（仮）モック ／ 合意形成用プロトタイプ ／ プレースホルダー素材
         </footer>
       </body>
     </html>

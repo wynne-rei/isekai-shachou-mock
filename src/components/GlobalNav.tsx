@@ -7,6 +7,7 @@ import { useEffect, useState } from "react";
 const NAV_ITEMS = [
   { href: "/", label: "🏠 ホーム" },
   { href: "/shayoku", label: "🏢 社屋（日常＋襲来）" },
+  { href: "/kyukei", label: "🌸 休憩室" },
 ];
 
 export function GlobalNav() {
@@ -30,8 +31,8 @@ export function GlobalNav() {
     <header className="border-b border-stone-700 bg-stone-950/80 backdrop-blur">
       <div className="max-w-6xl mx-auto px-4 py-2 flex items-center gap-4">
         <div className="font-bold text-amber-200 tracking-wide">
-          かんぱに<span className="text-rose-300">☆</span>ガールズ
-          <span className="ml-2 text-xs text-stone-400">新作モック v1.5</span>
+          異世界<span className="text-rose-300">★</span>社長
+          <span className="ml-2 text-xs text-stone-400">（仮）モック</span>
         </div>
         <nav className="flex gap-1 ml-4">
           {NAV_ITEMS.map((item) => {
