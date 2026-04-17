@@ -51,6 +51,7 @@ export const CHARACTERS: Character[] = [
   {
     id: "rose",
     name: "ローズ",
+    image: "characters/rose.png",
     job: "sword",
     title: "剣聖ローズ",
     color: "#e84a6f", // rose red
