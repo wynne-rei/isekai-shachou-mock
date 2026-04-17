@@ -1,9 +1,9 @@
 import type { NextConfig } from "next";
 
 // GitHub Pages 向け静的エクスポート設定
-// Pages の URL: https://wynne-rei.github.io/kanpani-mock/
+// Pages の URL: https://wynne-rei.github.io/isekai-shachou-mock/
 const isProd = process.env.NODE_ENV === "production";
-const repo = "kanpani-mock";
+const repo = "isekai-shachou-mock";
 
 const nextConfig: NextConfig = {
   output: "export",
