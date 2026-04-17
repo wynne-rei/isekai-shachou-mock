@@ -281,7 +281,10 @@ function CharacterPortrait({
         ? `/isekai-shachou-mock/${image}`
         : `/${image}`;
     return (
-      <div className="relative h-full w-full max-w-xl overflow-hidden flex justify-center">
+      <div
+        className="relative w-full max-w-xl overflow-hidden flex justify-center mx-auto"
+        style={{ height: "min(72vh, 620px)" }}
+      >
         {/* キャラ背後の発光 */}
         <div
           className="absolute inset-0 opacity-60 blur-3xl pointer-events-none"
@@ -289,13 +292,12 @@ function CharacterPortrait({
             background: `radial-gradient(circle at 50% 30%, ${color}88 0%, transparent 60%)`,
           }}
         />
-        {/* バストアップ表示：画像を親の約200%高さにして上から出し、腰〜下を切る */}
+        {/* バストアップ：画像を親の180%高さで上詰め、下半身を見切る */}
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
           src={src}
           alt={`${name}（${title}）`}
-          className="absolute top-0 left-1/2 -translate-x-1/2 h-[200%] max-h-none w-auto object-contain drop-shadow-[0_0_40px_rgba(0,0,0,0.7)]"
-          style={{ objectPosition: "center top" }}
+          className="absolute top-0 left-1/2 -translate-x-1/2 h-[180%] max-h-none w-auto drop-shadow-[0_0_40px_rgba(0,0,0,0.7)]"
         />
       </div>
     );
