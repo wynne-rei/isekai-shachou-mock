@@ -48,8 +48,13 @@ export function ShayokuCanvas({
     const app = new Application();
 
     (async () => {
+      // 初期サイズ：host が未レイアウトの可能性を考慮して最低値で保護
+      const initialW = Math.max(host.offsetWidth, 320);
+      const initialH = Math.max(host.offsetHeight, 240);
       await app.init({
-        resizeTo: host,
+        // ⚠️ resizeTo は使わない（window リサイズしか追わず host 追従しない）
+        width: initialW,
+        height: initialH,
         background: 0x1a1a22,
         antialias: true,
         autoDensity: true,
@@ -162,8 +167,8 @@ export function ShayokuCanvas({
 
       // レイアウト
       const layout = () => {
-        const W = app.renderer.width / (window.devicePixelRatio || 1);
-        const H = app.renderer.height / (window.devicePixelRatio || 1);
+        const W = app.renderer.screen.width;
+        const H = app.renderer.screen.height;
 
         // 空
         sky.clear();
@@ -241,8 +246,8 @@ export function ShayokuCanvas({
       app.ticker.add((ticker) => {
         const s = stateRef.current;
         if (!s) return;
-        const W = app.renderer.width / (window.devicePixelRatio || 1);
-        const H = app.renderer.height / (window.devicePixelRatio || 1);
+        const W = app.renderer.screen.width;
+        const H = app.renderer.screen.height;
         const dt = ticker.deltaTime;
         const dtSec = dt / 60;
 
@@ -480,8 +485,8 @@ export function ShayokuCanvas({
 
     layer.removeChildren();
 
-    const W = app.renderer.width / (window.devicePixelRatio || 1);
-    const H = app.renderer.height / (window.devicePixelRatio || 1);
+    const W = app.renderer.screen.width;
+    const H = app.renderer.screen.height;
 
     sky.clear();
     if (festival) {
@@ -853,8 +858,8 @@ function spawnSkillCutin(
   skillName: string,
   color: string
 ) {
-  const W = app.renderer.width / (window.devicePixelRatio || 1);
-  const H = app.renderer.height / (window.devicePixelRatio || 1);
+  const W = app.renderer.screen.width;
+  const H = app.renderer.screen.height;
 
   const container = new Container();
   layer.addChild(container);
