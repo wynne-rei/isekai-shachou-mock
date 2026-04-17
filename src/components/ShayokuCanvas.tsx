@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef } from "react";
-import { Application, Container, Graphics, Text, TextStyle } from "pixi.js";
+import { Application, Assets, Container, Graphics, Sprite, Text, TextStyle } from "pixi.js";
 import { DEPARTMENTS } from "@/data/departments";
 import { CHARACTERS, PLACEHOLDER_CHARACTERS } from "@/data/characters";
 
@@ -130,8 +130,29 @@ export function ShayokuCanvas({
         attackCd: number;
         skillCd: number;
       };
+      // basePath（GitHub Pages対応）
+      const assetBase =
+        process.env.NODE_ENV === "production" ? "/isekai-shachou-mock/" : "/";
+
+      // ちびキャラ画像を一括プリロード（あるキャラ分のみ）
+      const chibiUrls = deck
+        .filter((ch) => ch.chibi)
+        .map((ch) => assetBase + ch.chibi);
+      if (chibiUrls.length > 0) {
+        try {
+          await Assets.load(chibiUrls);
+        } catch (e) {
+          console.warn("chibi assets load failed", e);
+        }
+      }
+
       const charRefs: CharRef[] = deck.map((ch) => {
-        const sprite = createCharacterSprite(ch.name, ch.color);
+        const sprite = createCharacterSprite(
+          ch.name,
+          ch.color,
+          1,
+          ch.chibi ? assetBase + ch.chibi : undefined
+        );
         charLayer.addChild(sprite);
         return {
           sprite,
@@ -622,22 +643,44 @@ function createBuilding(color: string, name: string, emoji: string) {
   return { container, labelBg };
 }
 
-function createCharacterSprite(name: string, color: string, scale = 1) {
+function createCharacterSprite(
+  name: string,
+  color: string,
+  scale = 1,
+  chibiUrl?: string
+) {
   const c = new Container();
 
+  // 影（常時表示）
   const shadow = new Graphics();
-  shadow.ellipse(0, 16, 10, 3).fill({ color: 0x000000, alpha: 0.5 });
+  shadow.ellipse(0, 16, 14, 4).fill({ color: 0x000000, alpha: 0.5 });
   c.addChild(shadow);
 
-  const body = new Graphics();
-  body.circle(0, 0, 10).fill(colorToNumber(color));
-  body.rect(-7, 0, 14, 14).fill(colorToNumber(color));
-  c.addChild(body);
+  // chibiUrl があり、既にプリロード済みならSpriteで表示
+  if (chibiUrl && Assets.cache.has(chibiUrl)) {
+    const texture = Assets.get(chibiUrl);
+    const sprite = new Sprite(texture);
+    sprite.anchor.set(0.5, 1); // 足元中央
+    // 社屋での表示高さを 48px 想定にスケール
+    const targetH = 48;
+    const ratio = targetH / (texture.height || targetH);
+    sprite.scale.set(ratio);
+    // 影位置との整合（足元を影の中心に）
+    sprite.y = 16;
+    c.addChild(sprite);
+  } else {
+    // フォールバック：Graphics シルエット
+    const body = new Graphics();
+    body.circle(0, 0, 10).fill(colorToNumber(color));
+    body.rect(-7, 0, 14, 14).fill(colorToNumber(color));
+    c.addChild(body);
 
-  const head = new Graphics();
-  head.circle(0, -5, 6).fill(0xf9e5d3);
-  c.addChild(head);
+    const head = new Graphics();
+    head.circle(0, -5, 6).fill(0xf9e5d3);
+    c.addChild(head);
+  }
 
+  // ネームタグ
   const nameStyle = new TextStyle({
     fontSize: 10,
     fill: 0xffffff,
@@ -646,7 +689,8 @@ function createCharacterSprite(name: string, color: string, scale = 1) {
   });
   const nameText = new Text({ text: name, style: nameStyle });
   nameText.anchor.set(0.5, 1);
-  nameText.position.set(0, -14);
+  // 実画像の場合は頭の上、シルエットの場合は体の上
+  nameText.position.set(0, chibiUrl && Assets.cache.has(chibiUrl) ? -36 : -14);
   c.addChild(nameText);
 
   c.scale.set(scale);

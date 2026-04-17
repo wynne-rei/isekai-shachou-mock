@@ -19,6 +19,8 @@ export interface Character {
   color: string;
   /** 実画像パス（あれば）。無い場合はSVGプレースホルダーで描画 */
   image?: string;
+  /** 社屋（インゲーム）用のちびキャラ画像（あれば）。無ければGraphicsシルエットで描画 */
+  chibi?: string;
   department: Department;
   greeting: {
     morning: string;
@@ -38,6 +40,7 @@ export const CHARACTERS: Character[] = [
     title: "聖装モニク",
     color: "#d4c5f0", // lavender（実画像の髪色基調）
     image: "characters/monique_v2.png",
+    chibi: "characters/monique_chibi.png",
     department: "hr",
     greeting: {
       morning: "社長、おはようございます。今日もよろしくお願いします",
